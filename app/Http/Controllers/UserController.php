@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Post;
-use Log;
+use App\User;
 use Validator;
-class PostController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('post',[
-            'title'=>'list all my post',
-            'posts'=>Post::all(),
+        return view('user',[
+            'users'=>User::all()
         ]);
     }
 
@@ -39,17 +37,20 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        // Log::debug($request->all());
         $validator = Validator::make($request->all(), [
-            'title' => 'required|max:255',
-            'content' => 'required',
+            'name' => 'required|',
+            'email' => 'required|unique:users',
+            'password'=>'required|confirmed',
         ]);
 
         if ($validator->fails()) {
-            return ['errors' => $validator->errors()];
+            return redirect('/user')
+            ->withErrors($validator)
+            ->withInput();
         }
 
-        return Post::create($request->all());
+         User::create($request->all());
+        return redirect('/user');
     }
 
     /**
@@ -60,7 +61,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        return Post::findOrFail($id);
+        //
     }
 
     /**
@@ -94,6 +95,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::destroy($id);
+        return redirect('/user');
     }
 }
