@@ -1,5 +1,6 @@
 <td style="border-bottom: 1px solid #D3474A;">
-    @extends('layouts.app') @section('script')
+    @extends('layouts.app') 
+    @section('script')
     <script>
         $(function() {
             $('.btn-delete').click(function() {
@@ -10,7 +11,8 @@
         });
     </script>
 
-    @endsection @section('content')
+    @endsection 
+    @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-12">

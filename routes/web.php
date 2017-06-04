@@ -14,10 +14,16 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/posts','PostController@index');
-Route::get('/posts/{id}','PostController@show');
-Route::post('/posts','PostController@store');
 
+Route::get('/posts', function () {
+    return view('post');
+});
+Route::get('/posts/{id}', function ($id) {
+    return view('postsingle',[
+        'id'=>$id
+    ]);
+                 
+});
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
